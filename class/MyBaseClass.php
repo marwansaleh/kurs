@@ -1,5 +1,5 @@
 <?php if (!defined('APP_PATH')) exit('No direct script access allowed'); 
-require APP_PATH . 'class/database.php';
+require APP_PATH . 'class/Database.php';
 /**
  * Description of MyBaseClass
  *
@@ -17,13 +17,23 @@ class MyBaseClass {
         $this->_log_path = rtrim(sys_get_temp_dir(), '/') .'/';
         
         $this->read_config_files(APP_PATH .'config');
+        $this->_db_setup();
+    }
+    
+    private function _db_setup(){
+        if (class_exists('mysqli')){
+            $this->db = new MYSQLI_DB();
+        }else if(class_exists('PDO')){
+            $this->db = new PDO_DB();
+        }else{
+            $this->db = new MYSQL_DB();
+        }
         
-        $this->db = Database::getInstance(
-            $this->config('db_dbname'),
-            $this->config('db_dbuser'),
-            $this->config('db_dbpassword'),
-            $this->config('db_dbhost')
-        );
+        if ($this->db){
+            $this->db->connect($this->config('db_dbhost'),$this->config('db_dbname'),$this->config('db_dbuser'),$this->config('db_dbpassword'));
+        }else{
+            exit ('No database library can be used to connect to database'. PHP_EOL);
+        }
     }
     
     /**
