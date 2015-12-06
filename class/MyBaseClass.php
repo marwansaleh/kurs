@@ -32,7 +32,7 @@ class MyBaseClass {
         if ($this->db){
             $this->db->connect($this->config('db_dbhost'),$this->config('db_dbname'),$this->config('db_dbuser'),$this->config('db_dbpassword'));
         }else{
-            exit ('No database library can be used to connect to database'. PHP_EOL);
+            trigger_error('No database library can be used to connect to database', E_USER_ERROR);
         }
     }
     
