@@ -3,7 +3,7 @@ date_default_timezone_set('Asia/Jakarta');
 define('APP_PATH', dirname(__FILE__).'/');
 
 //setup environment
-$production = '/u/k2427808/home/kurs';
+$production = '/home/sloki/user/k2427808/home/kurs';
 $testing = '/u/k2427808/sites/pre.indonesiasatu.co/kurs';
 
 $dirname = dirname(__FILE__);
