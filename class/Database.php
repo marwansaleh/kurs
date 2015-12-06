@@ -434,9 +434,9 @@ class MYSQL_DB implements IDatabase {
     public function connect($host,$db_name,$db_user,$db_pwd){
         $this->_connection = mysql_connect($host, $db_user, $db_pwd);
         if (!$this->_connection){
-            trigger_error('Failed to connect to create database connection', E_USER_ERROR);
+            trigger_error('Failed to create database connection', E_USER_ERROR);
         }else{
-            mysql_select_db($db_name, $this->_connection);
+            mysql_select_db($db_name, $this->_connection) or trigger_error('Can not select database for this connection', E_USER_ERROR);
         }
     }
     public function close(){
