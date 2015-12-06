@@ -14,9 +14,18 @@ class MyBaseClass {
     protected $_lock_handle = NULL;
     
     function __construct() {
+        $this->init();
+    }
+    
+    private function init(){
+        echo "<<<<< RUNNING IN ENVIRONMENT: ".ENVIRONMENT." >>>>>" . PHP_EOL;
+        echo "<<<<< SETUP LOG PATH >>>>>" . PHP_EOL;
         $this->_log_path = rtrim(sys_get_temp_dir(), '/') .'/';
         
+        echo "<<<<< READ CONFIG FILES >>>>>" . PHP_EOL;
         $this->read_config_files(APP_PATH .'config');
+        
+        echo "<<<<< CREATE DATABASE CONNECTION >>>>" . PHP_EOL;
         $this->_db_setup();
     }
     
