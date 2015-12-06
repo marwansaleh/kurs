@@ -16,7 +16,7 @@ class MyBaseClass {
     function __construct() {
         $this->_log_path = rtrim(sys_get_temp_dir(), '/') .'/';
         
-        $this->_config = $this->_read_config_files(APP_PATH .'config');
+        $this->read_config_files(APP_PATH .'config');
         
         $this->db = Database::getInstance(
             $this->config('db_dbname'),
@@ -39,32 +39,35 @@ class MyBaseClass {
         }
     }
     
-    /**
-     * Read all config arrays from files in the specific folder
-     * @param string $config_path
-     * @return array
-     */
-    private function _read_config_files($config_path){
-        $result_config = array();
+    protected function read_config_files($config_path){
+        $config_files = $this->_get_files($config_path);
+        foreach ($config_files as $file){
+            include $file;
+        }
         
-        if (!$config_path) { $config_path = APP_PATH; }
-        
-        if ($handle = opendir($config_path)) {
-
+        if (isset($config) && is_array($config)){
+            $this->_config = $config;
+        }
+    }
+    
+    private function _get_files($path){
+        $files = array();
+        if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != ".."){
-                    if (is_file($config_path .'/'. $entry)){
-                        include $config_path .'/'. $entry;
-                        if (isset($config)){
-                            $result_config = array_merge($result_config, $config);
+                    if (is_dir($path .'/'. $entry)){
+                        if ($entry == ENVIRONMENT){
+                            $files = array_merge($files, $this->_get_files($path .'/' . $entry));
                         }
+                    }else{
+                        $files [] = $path .'/' . $entry;
                     }
                 }
             }
-
             closedir($handle);
         }
-        return $result_config;
+        
+        return $files;
     }
     
     /**
