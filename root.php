@@ -14,4 +14,4 @@ switch ($dirname){
 }
 
 //include all required files
-require_once APP_PATH . 'MyBaseClass.php';
+require_once APP_PATH . 'class/MyBaseClass.php';
