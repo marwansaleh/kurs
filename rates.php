@@ -1,9 +1,5 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-
-define('APP_PATH', dirname(__FILE__).'/');
-
-require APP_PATH . 'class/MyBaseClass.php';
+require 'root.php';
 require APP_PATH . 'utils/simple_html_dom.php';
 
 /* 
