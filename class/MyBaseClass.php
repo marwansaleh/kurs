@@ -53,9 +53,11 @@ class MyBaseClass {
 
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != ".."){
-                    include $config_path .'/'. $entry;
-                    if (isset($config)){
-                        $result_config = array_merge($result_config, $config);
+                    if (is_file($config_path .'/'. $entry)){
+                        include $config_path .'/'. $entry;
+                        if (isset($config)){
+                            $result_config = array_merge($result_config, $config);
+                        }
                     }
                 }
             }
@@ -90,10 +92,8 @@ class MyBaseClass {
      * @param bool $adaptive
      * @return string log if success or FALSE if failed
      */
-    protected function read_log($filepath=NULL, $lines=5, $adaptive = true){
-        if (!$filepath){
-            $filepath = $this->_log_path . $this->_log_file;
-        }
+    protected function read_log($lines=5, $adaptive = true){
+        $filepath = $this->_log_path . $this->_log_file;
         // Open file
         $f = @fopen($filepath, "rb");
         if ($f === false) return false;
