@@ -9,7 +9,7 @@ class MYSQLI_DB implements IDatabase {
     public function connect($host,$db_name,$db_user,$db_pwd){
         $this->_connection = new mysqli($host, $db_user, $db_pwd, $db_name);
         if ($this->_connection->connect_errno) {
-            die ("Failed to connect to MySQLi: (" . $this->_connection->connect_errno . ") " . $this->_connection->connect_error);
+            trigger_error ("Failed to connect to MySQLi: (" . $this->_connection->connect_errno . ") " . $this->_connection->connect_error, E_USER_ERROR);
         }
     }
     public function close(){
@@ -221,7 +221,7 @@ class PDO_DB implements IDatabase {
         try {
             $this->_connection = new PDO('mysql:host='.$host.';dbname='.$db_name, $db_user, $db_pwd);
         } catch (PDOException $e) {
-            die ("Failed to connect to MySQL PDO: " . $e->getMessage());
+            trigger_error("Failed to connect to MySQL PDO: " . $e->getMessage(), E_USER_ERROR);
         }
     }
     public function close(){
@@ -432,8 +432,12 @@ class MYSQL_DB implements IDatabase {
         return 'MYSQL';
     }
     public function connect($host,$db_name,$db_user,$db_pwd){
-        $this->_connection = mysql_connect($host, $db_user, $db_pwd) or die('Failed to connect to create database connection');
-        mysql_select_db($db_name, $this->_connection);
+        $this->_connection = mysql_connect($host, $db_user, $db_pwd);
+        if (!$this->_connection){
+            trigger_error('Failed to connect to create database connection', E_USER_ERROR);
+        }else{
+            mysql_select_db($db_name, $this->_connection);
+        }
     }
     public function close(){
         if ($this->_connection){
