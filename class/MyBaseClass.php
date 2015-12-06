@@ -18,6 +18,7 @@ class MyBaseClass {
     }
     
     private function init(){
+        echo "<<<<< APP_PATH: ".APP_PATH." >>>>>" . PHP_EOL;
         echo "<<<<< RUNNING IN ENVIRONMENT: ".ENVIRONMENT." >>>>>" . PHP_EOL;
         echo "<<<<< SETUP LOG PATH >>>>>" . PHP_EOL;
         $this->_log_path = rtrim(sys_get_temp_dir(), '/') .'/';
