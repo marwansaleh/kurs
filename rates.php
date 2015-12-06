@@ -80,7 +80,7 @@ class Rates extends MyBaseClass{
                         'sell'          => $nilai[0],
                         'buy'           => $nilai[1]
                     );
-                    $this->db->insert($data, $this->_table_rate);
+                    $this->db->insert($this->_table_rate, $data);
                     echo 'Insert '.$rate.' for '.$bank_name.' '.$last_update. PHP_EOL;
                 }
             }
@@ -94,7 +94,7 @@ class Rates extends MyBaseClass{
                 $this->db->update($this->_table_bank, $bank_last_update, array('bank'=>$bank_name));
             }else{
                 $bank_last_update['bank'] = $bank_name;
-                $this->db->insert($bank_last_update, $this->_table_bank);
+                $this->db->insert($this->_table_bank, $bank_last_update);
             }
         }
     }
@@ -142,7 +142,7 @@ class Rates extends MyBaseClass{
                     'sell'          => $sell,
                     'buy'           => $buy
                 );
-                $this->db->insert($data, $this->_table_rate);
+                $this->db->insert($this->_table_rate, $data);
                 echo 'Insert '.$rate.' for '.$bank_name.' '.$last_update. PHP_EOL;
             }
             $i++;
@@ -157,7 +157,7 @@ class Rates extends MyBaseClass{
             $this->db->update($this->_table_bank, $bank_last_update, array('bank'=>$bank_name));
         }else{
             $bank_last_update['bank'] = $bank_name;
-            $this->db->insert($bank_last_update, $this->_table_bank);
+            $this->db->insert($this->_table_bank, $bank_last_update);
         }
     }
     
@@ -204,7 +204,7 @@ class Rates extends MyBaseClass{
                     'sell'          => $sell,
                     'buy'           => $buy
                 );
-                $this->db->insert($data, $this->_table_rate);
+                $this->db->insert($this->_table_rate, $data);
                 echo 'Insert '.$rate.' for '.$bank_name.' '.$last_update. PHP_EOL;
             }
             $i++;
@@ -216,10 +216,10 @@ class Rates extends MyBaseClass{
         );
         echo 'Update bank '.$bank_name.' last update for '. $last_update. PHP_EOL;
         if ($this->db->get_count($this->_table_bank, array('bank'=>$bank_name))){
-            $this->db->update($table_bank, $bank_last_update, array('bank'=>$bank_name));
+            $this->db->update($this->_table_bank, $bank_last_update, array('bank'=>$bank_name));
         }else{
             $bank_last_update['bank'] = $bank_name;
-            $this->db->insert($bank_last_update, $this->_table_bank);
+            $this->db->insert($this->_table_bank, $bank_last_update);
         }
     }
     
@@ -268,7 +268,7 @@ class Rates extends MyBaseClass{
                     'sell'          => $sell,
                     'buy'           => $buy
                 );
-                $this->db->insert($data, $this->_table_rate);
+                $this->db->insert($this->_table_rate, $data);
                 echo 'Insert '.$rate.' for '.$bank_name.' '.$last_update. PHP_EOL;
             }
             $i++;
@@ -280,10 +280,10 @@ class Rates extends MyBaseClass{
         );
         echo 'Update bank '.$bank_name.' last update for '. $last_update. PHP_EOL;
         if ($this->db->get_count($this->_table_bank, array('bank'=>$bank_name))){
-            $this->db->update($table_bank, $bank_last_update, array('bank'=>$bank_name));
+            $this->db->update($this->_table_bank, $bank_last_update, array('bank'=>$bank_name));
         }else{
             $bank_last_update['bank'] = $bank_name;
-            $this->db->insert($bank_last_update, $this->_table_bank);
+            $this->db->insert($this->_table_bank, $bank_last_update);
         }
     }
 }
